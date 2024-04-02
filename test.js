@@ -111,11 +111,10 @@ const code = "const solutions = [];"+"function is_valid_solution(solution, grid)
     "        yield* iter(iterables, repeat);\n" +
     "    }\n" +
     "}" +
-    "f"
     `for (let el in ${batch}){\n` +
     "                    if (is_valid_solution(batch[el], grid)) {\n" +
     "                        solutions.push(batch[el].slice());\n" +
-    "                        return solutions\n" +
+    "                        console.log(solutions)\n" +
     "                    }\n" +
     "                }"
 
