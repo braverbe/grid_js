@@ -1,10 +1,12 @@
 let batch = [[
-    2, 1, 7, 4, 3,
-    7, 7, 7, 7
-], [
-    2, 1, 7, 4, 3,
-    7, 7, 7, 7
-]]
+        2, 1, 7, 4, 3,
+        7, 7, 7, 7
+    ],
+    [
+        2, 1, 7, 5, 4,
+        1, 4, 6, 3
+    ]
+]
 
 
 const code = "const solutions = [];"+"function is_valid_solution(solution, grid) {\n" +

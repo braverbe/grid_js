@@ -95,12 +95,12 @@ function generate_solutions(grid, batchsize) {
     const generate_next = (current_solution, index) => {
         if (index === size) {
             if (batch.length===batchsize){
-                // for (let el in batch){
-                //     if (is_valid_solution(batch[el], grid)) {
-                //         solutions.push(batch[el].slice());
-                //         console.log(solutions)
-                //     }
-                // }
+                for (let el in batch){
+                    if (is_valid_solution(batch[el], grid)) {
+                        solutions.push(batch[el].slice());
+                        console.log(solutions)
+                    }
+                }
 
                 const code = `
                     let batch = ${JSON.stringify(batch)}
@@ -201,6 +201,8 @@ function generate_solutions(grid, batchsize) {
                         return solutions`
 
                 //тут отправка будет
+
+                // exec_code(code)
                 batch = []
             }
             batch.push(current_solution.slice())
@@ -274,9 +276,9 @@ function* product(iterables, repeat) {
 }
 
 const grid = [
-    '0', '0', '0',
-    '0', '0', '0',
-    '0', '0', '0',
+    'a', 'b', 'a',
+    'b', '0', 'b',
+    'a', 'b', 'a',
 ];
 const batchsize = 10
 const size = grid.length;

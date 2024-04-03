@@ -1,28 +1,8 @@
 
 
-let batch = [
-    [
-        2, 1, 7, 4, 3,
-        7, 7, 7, 7
-    ],
-    [
-        2, 1, 7, 5, 4,
-        1, 4, 6, 3
-    ],
-    [
-        2, 6, 1, 5, 7,
-        5, 4, 6, 3
-    ]
-
-]
-const grid = [
-    'a', '0', 'a',
-    '0', '0', '0',
-    'a', '0', 'a',
-];
 function exec_code(batch){
     function is_valid_solution(solution, grid) {
-        const size = grid.length;
+        const size = solution.length;
         const length = Math.sqrt(size);
 
         for (let i = 0; i < solution.length; i++) {
@@ -96,26 +76,34 @@ function exec_code(batch){
             }
 
             if (grid[i] === 'a') {
-                if (![1, 2, 3, 4].includes(parseInt(solution[i]))) {
+                if (![1, 2, 3, 4].includes(solution[i])) {
                     return false;
                 }
             }
             if (grid[i] === 'b') {
-                if (![5, 6].includes(parseInt(solution[i]))) {
+                if (![5, 6].includes(solution[i])) {
                     return false;
                 }
             }
         }
         return true;
     }
-    let solutions = []
+    let solutions = [];
     for (let el of batch){
-        if (is_valid_solution(el, grid)) {
+        if (is_valid_solution(el, el.length)) {
             solutions.push(el);
         }
     }
-    return solutions
+    return solutions;
 }
 
+
+let batch = [[
+    2, 1, 7, 4, 3,
+    7, 7, 7, 6
+], [
+    2, 1, 7, 4, 3,
+    7, 7, 7, 7
+]]
 
 console.log(exec_code(batch))
