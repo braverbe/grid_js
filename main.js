@@ -286,10 +286,20 @@ function* product(iterables, repeat) {
     }
 }
 
-const grid = [
-    '0', '0',
-    '0', '0',
-];
+
+
+const fs = require('fs');
+let grid = []
+try {
+    // Синхронное чтение содержимого файла grid.json
+    const data = fs.readFileSync('grid.json', 'utf8');
+    const gridData = JSON.parse(data);
+    grid = gridData.grid;
+
+} catch (err) {
+    console.error('Ошибка при чтении файла:', err);
+}
+
 const batchsize = 10
 const size = grid.length;
 const solutions = generate_solutions(grid, batchsize);
