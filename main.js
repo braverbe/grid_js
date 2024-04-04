@@ -95,20 +95,21 @@ function generate_solutions(grid, batchsize) {
     const generate_next = (current_solution, index) => {
         if (index === size) {
             if (batch.length===batchsize){
-                for (let el in batch){
-                    if (is_valid_solution(batch[el], grid)) {
-                        solutions.push(batch[el].slice());
-                        console.log(solutions)
-                    }
-                }
+                // for (let el in batch){
+                //     if (is_valid_solution(batch[el], grid)) {
+                //         solutions.push(batch[el].slice());
+                //         console.log(solutions)
+                //     }
+                // }
 
                 const code = `
                     let batch = ${JSON.stringify(batch)}
+                    let grid = ${JSON.stringify(grid)}
                     function exec_code(batch){
                         function is_valid_solution(solution, grid) {
                             const size = grid.length;
                             const length = Math.sqrt(size);
-                        
+                    
                             for (let i = 0; i < solution.length; i++) {
                                 try {
                                     if (solution[i] === 1) {
@@ -157,7 +158,7 @@ function generate_solutions(grid, batchsize) {
                                 } catch (error) {
                                     return false;
                                 }
-                        
+                    
                                 if (i < length) {
                                     if ([3, 4, 5].includes(solution[i])) {
                                         return false;
@@ -178,14 +179,14 @@ function generate_solutions(grid, batchsize) {
                                         return false;
                                     }
                                 }
-                        
+                    
                                 if (grid[i] === 'a') {
-                                    if (![1, 2, 3, 4].includes(solution[i])) {
+                                    if (![1, 2, 3, 4].includes(parseInt(solution[i]))) {
                                         return false;
                                     }
                                 }
                                 if (grid[i] === 'b') {
-                                    if (![5, 6].includes(solution[i])) {
+                                    if (![5, 6].includes(parseInt(solution[i]))) {
                                         return false;
                                     }
                                 }
@@ -193,14 +194,24 @@ function generate_solutions(grid, batchsize) {
                             return true;
                         }
                         let solutions = []
-                        for (let el of ${JSON.stringify(batch)}){
-                            if (is_valid_solution(batch[el], batch[el].length)) {
-                                solutions.push(batch[el].slice());
+                        for (let el of batch){
+                            if (is_valid_solution(el, grid)) {
+                                solutions.push(el.slice());
                             }
                         }
-                        return solutions`
+                        return solutions
+                    }`
 
                 //тут отправка будет
+                eval(code)
+                if(exec_code(batch).length){
+                    // console.log(exec_code(batch))
+                    for (sol of exec_code(batch)){
+                        solutions.push(sol)
+                    }
+                    // console.log(solutions)
+                }
+
 
                 // exec_code(code)
                 batch = []
@@ -276,9 +287,8 @@ function* product(iterables, repeat) {
 }
 
 const grid = [
-    'a', 'b', 'a',
-    'b', '0', 'b',
-    'a', 'b', 'a',
+    '0', '0',
+    '0', '0',
 ];
 const batchsize = 10
 const size = grid.length;
